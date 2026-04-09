@@ -1,4 +1,4 @@
-# Claude Prompt Library — Piaazo Agency
+# Claude Prompt Library — Evocreatives Agency
 > Copy-paste these prompts. Replace [BRACKETED] values.
 
 ---
