@@ -1,0 +1,238 @@
+name: CI → QA → Deploy
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '20'
+
+# ─────────────────────────────────────────
+# JOB 1: Build
+# ─────────────────────────────────────────
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: .next/
+          retention-days: 1
+
+# ─────────────────────────────────────────
+# JOB 2: Playwright E2E Tests
+# ─────────────────────────────────────────
+  e2e:
+    name: E2E Tests
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: .next/
+
+      - name: Run Playwright tests
+        run: npx playwright test
+        env:
+          CI: true
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+# ─────────────────────────────────────────
+# JOB 3: Lighthouse CI
+# ─────────────────────────────────────────
+  lighthouse:
+    name: Lighthouse Audit
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install wait-on
+        run: npm install -g wait-on
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: .next/
+
+      # FIX 3+4: Start server explicitly, wait for it, then pass the live URL
+      # to lhci directly. This avoids lhci trying to start its own server
+      # (which races with the build artifact) and guarantees the port is ready.
+      - name: Start Next.js server
+        run: |
+          npm run start &
+          echo "SERVER_PID=$!" >> $GITHUB_ENV
+          wait-on http://localhost:3000 --timeout 30000
+
+      - name: Run Lighthouse CI
+        run: npx lhci autorun --collect.url=http://localhost:3000 --collect.startServerCommand=""
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+      - name: Stop server
+        if: always()
+        run: kill $SERVER_PID || true
+
+# ─────────────────────────────────────────
+# JOB 4: Deploy Preview (PR only)
+# ─────────────────────────────────────────
+  deploy-preview:
+    name: Deploy Preview
+    needs: [e2e, lighthouse]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    outputs:
+      preview-url: ${{ steps.deploy.outputs.preview-url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      # FIX 1: VERCEL_ORG_ID + VERCEL_PROJECT_ID must be on EVERY vercel
+      # command — pull, build, and deploy all need them to resolve the project.
+      - name: Pull Vercel environment
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Build for Vercel
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Deploy to preview
+        id: deploy
+        run: |
+          URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          echo "preview-url=$URL" >> $GITHUB_OUTPUT
+          echo "### 🚀 Preview Deploy" >> $GITHUB_STEP_SUMMARY
+          echo "URL: $URL" >> $GITHUB_STEP_SUMMARY
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      # FIX 9: Step outputs cannot be interpolated with ${{ }} inside a
+      # github-script body — they resolve before the script runs and become
+      # a literal string. Pass via env and read with process.env instead.
+      - name: Comment PR with preview URL
+        uses: actions/github-script@v7
+        env:
+          PREVIEW_URL: ${{ steps.deploy.outputs.preview-url }}
+        with:
+          script: |
+            const url = process.env.PREVIEW_URL;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🚀 Preview deployed\n\n**URL:** ${url}\n\n✅ E2E tests passed · Lighthouse audit passed`
+            })
+
+# ─────────────────────────────────────────
+# JOB 5: Deploy Production (push to main)
+# ─────────────────────────────────────────
+  deploy-production:
+    name: Deploy Production
+    needs: [e2e, lighthouse]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      # FIX 1 (production): same — env vars on every vercel command
+      - name: Pull Vercel environment
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      # FIX 2: `vercel build` has no --prod flag — that flag only exists on
+      # `vercel deploy`. Removed. The --prod on the deploy step is correct.
+      - name: Build for Vercel
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Deploy to production
+        run: |
+          URL=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "### ✅ Production Deploy" >> $GITHUB_STEP_SUMMARY
+          echo "URL: $URL" >> $GITHUB_STEP_SUMMARY
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}

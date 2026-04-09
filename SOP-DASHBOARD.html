@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Piaazo Agency — Web Project SOP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --ink:      #0f0e0d;
+  --paper:    #f5f2ed;
+  --paper2:   #ede9e2;
+  --paper3:   #e3dfd7;
+  --rule:     #d1ccc3;
+  --rule2:    #bfb9af;
+  --muted:    #8a8278;
+  --faint:    #c5bfb6;
+  --accent:   #c84b2f;
+  --accent2:  #1a3a5c;
+  --gold:     #b8860b;
+  --green:    #2d6a3f;
+  --display:  'Bricolage Grotesque', sans-serif;
+  --mono:     'JetBrains Mono', monospace;
+  --serif:    'Lora', Georgia, serif;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0 0 0;
+  position: relative;
+  overflow: hidden;
+}
+.masthead::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 39px,
+    rgba(255,255,255,.04) 39px,
+    rgba(255,255,255,.04) 40px
+  );
+  pointer-events: none;
+}
+.masthead-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 52px 36px 0;
+  position: relative;
+}
+.masthead-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.masthead-eyebrow::after {
+  content: '';
+  flex: 1; height: 1px;
+  background: rgba(255,255,255,.12);
+}
+h1 {
+  font-family: var(--display);
+  font-size: clamp(34px, 6vw, 64px);
+  font-weight: 800;
+  line-height: .98;
+  letter-spacing: -.03em;
+  color: var(--paper);
+  margin-bottom: 24px;
+}
+h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(245,242,237,.5);
+}
+.masthead-meta {
+  display: flex; flex-wrap: wrap; gap: 24px;
+  padding: 20px 0 28px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: rgba(245,242,237,.45);
+  letter-spacing: .06em;
+  border-top: 1px solid rgba(255,255,255,.08);
+  margin-top: 12px;
+}
+.masthead-stat { display: flex; gap: 8px; align-items: center; }
+.masthead-stat strong { color: var(--paper); font-weight: 500; }
+
+/* ── PHASE TABS ── */
+.phase-bar {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.phase-bar-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 36px;
+  display: flex; gap: 0;
+  overflow-x: auto;
+}
+.phase-tab {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 14px 20px 12px;
+  border: none; background: none;
+  color: rgba(245,242,237,.35);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.phase-tab:hover { color: rgba(245,242,237,.7); }
+.phase-tab.active { color: var(--paper); border-bottom-color: var(--accent); }
+
+/* ── LAYOUT ── */
+.content {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 36px 80px;
+}
+.two-col {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 48px;
+  padding-top: 52px;
+  align-items: start;
+}
+@media (max-width: 760px) {
+  .two-col { grid-template-columns: 1fr; gap: 32px; }
+  .content { padding: 0 20px 60px; }
+  .masthead-inner { padding: 36px 20px 0; }
+  .phase-bar-inner { padding: 0 20px; }
+}
+
+/* ── SIDEBAR ── */
+.sidebar {}
+.sidebar-section { margin-bottom: 32px; }
+.sidebar-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--rule);
+}
+.sidebar-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: color .12s;
+}
+.sidebar-item:hover { color: var(--accent); }
+.sidebar-item:last-child { border-bottom: none; }
+.sidebar-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--faint);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.sidebar-check {
+  width: 16px; height: 16px;
+  border: 1.5px solid var(--rule2);
+  border-radius: 3px;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+  margin-top: 2px;
+}
+.sidebar-check.done {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+  font-size: 10px;
+}
+
+/* Progress bar */
+.progress-wrap { margin-bottom: 32px; }
+.progress-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 8px;
+}
+.progress-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.progress-pct {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.progress-track {
+  height: 4px;
+  background: var(--paper3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 2px;
+  transition: width .4s ease;
+}
+
+/* ── MAIN CONTENT ── */
+.main {}
+.phase-panel { display: none; }
+.phase-panel.active { display: block; }
+
+h2 {
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.panel-desc {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* ── STEP CARDS ── */
+.step-card {
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  transition: border-color .15s;
+}
+.step-card:hover { border-color: var(--rule2); }
+.step-card.completed { opacity: .65; }
+.step-card.completed .step-head { background: #f8f6f0; }
+
+.step-head {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+}
+.step-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  letter-spacing: .06em;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.badge-setup   { background: #e8f0fd; color: #1a3a5c; border: 1px solid #c5d5f5; }
+.badge-build   { background: #fdf3e8; color: #7a3a10; border: 1px solid #f5d5b5; }
+.badge-test    { background: #e8f5ee; color: #1a5c33; border: 1px solid #b5e5c5; }
+.badge-deploy  { background: #fde8e8; color: #5c1a1a; border: 1px solid #f5b5b5; }
+.badge-monitor { background: #f3e8fd; color: #3a1a5c; border: 1px solid #d5b5f5; }
+
+.step-title-wrap { flex: 1; }
+.step-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.step-subtitle { font-size: 12.5px; color: var(--muted); }
+.step-time {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--faint);
+  flex-shrink: 0;
+}
+.step-toggle {
+  font-size: 16px;
+  color: var(--faint);
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+.step-card.open .step-toggle { transform: rotate(180deg); }
+
+.step-body {
+  display: none;
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--rule);
+}
+.step-card.open .step-body { display: block; }
+
+.step-body p { font-size: 14px; color: #3a3530; margin: 14px 0 10px; line-height: 1.65; }
+
+/* ── Code in steps ── */
+.code-block {
+  background: var(--ink);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+.code-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 14px;
+  background: #1e1c1a;
+  border-bottom: 1px solid #333;
+}
+.code-filename {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #8a8278;
+  letter-spacing: .04em;
+}
+.copy-btn {
+  font-family: var(--mono);
+  font-size: 10px;
+  background: none; border: 1px solid #333;
+  color: #8a8278; cursor: pointer;
+  padding: 2px 8px; border-radius: 4px;
+  letter-spacing: .06em;
+  transition: all .15s;
+}
+.copy-btn:hover { border-color: #555; color: var(--paper); }
+pre {
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.7;
+  color: #c9d1d9;
+  overflow-x: auto;
+}
+.k { color: #c678dd; }
+.s { color: #98c379; }
+.c { color: #5c6370; font-style: italic; }
+.v { color: #d19a66; }
+.f { color: #61afef; }
+code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  background: var(--paper2);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--rule);
+  color: var(--accent2);
+}
+
+/* ── Checklist inside step ── */
+.checklist { list-style: none; margin: 12px 0; }
+.checklist li {
+  display: flex; gap: 10px; align-items: flex-start;
+  font-size: 13.5px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--rule);
+  line-height: 1.5;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li::before {
+  content: '→';
+  color: var(--faint);
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+/* ── Alert boxes ── */
+.alert {
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  margin: 12px 0;
+  display: flex; gap: 10px;
+}
+.alert-warn { background: #fdf8e8; border: 1px solid #e8d080; color: #5c4a10; }
+.alert-info { background: #e8f0fd; border: 1px solid #a0baea; color: #1a3050; }
+.alert-ok   { background: #e8f5ee; border: 1px solid #90d5a8; color: #1a4a28; }
+
+/* ── Prompts section ── */
+.prompt-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+@media (max-width: 600px) { .prompt-grid { grid-template-columns: 1fr; } }
+.prompt-card {
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.prompt-card:hover { border-color: var(--accent2); background: #f8f6ff; }
+.prompt-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.prompt-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.prompt-desc { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+/* Prompt modal */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(15,14,13,.7);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: white;
+  border-radius: 14px;
+  max-width: 680px;
+  width: calc(100% - 40px);
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 40px 80px rgba(0,0,0,.35);
+}
+.modal-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--rule);
+  position: sticky; top: 0; background: white;
+}
+.modal-title { font-size: 17px; font-weight: 700; }
+.modal-close {
+  background: none; border: none;
+  font-size: 22px; cursor: pointer;
+  color: var(--muted); line-height: 1;
+  padding: 0 4px;
+}
+.modal-body { padding: 20px 24px 24px; }
+.modal-body pre {
+  background: var(--ink);
+  border-radius: 8px;
+  color: #c9d1d9;
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.modal-copy-btn {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .06em;
+  cursor: pointer;
+  transition: background .15s;
+}
+.modal-copy-btn:hover { background: #2a2826; }
+
+/* ── Repo tree ── */
+.file-tree {
+  background: var(--ink);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: #8a8278;
+  line-height: 1.9;
+}
+.ft-dir { color: #61afef; }
+.ft-file { color: #c9d1d9; }
+.ft-comment { color: #5c6370; }
+.ft-important { color: #d19a66; font-weight: 500; }
+
+/* ── Status row ── */
+.status-row {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 20px 0;
+}
+.status-pill {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  letter-spacing: .06em;
+  border: 1px solid;
+}
+.pill-done   { background: #e8f5ee; border-color: #90d5a8; color: #1a4a28; }
+.pill-todo   { background: var(--paper2); border-color: var(--rule2); color: var(--muted); }
+.pill-crit   { background: #fde8e8; border-color: #e5a0a0; color: #5c1a1a; }
+
+/* ── Print-style rule ── */
+hr { border: none; border-top: 1px solid var(--rule); margin: 24px 0; }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-eyebrow">Piaazo Agency · Standard Operating Procedure</div>
+    <h1>Web Project<br><em>Build → QA → Deploy</em><br>Playbook</h1>
+    <div class="masthead-meta">
+      <span class="masthead-stat">Version <strong>1.0</strong></span>
+      <span class="masthead-stat">Phases <strong>5</strong></span>
+      <span class="masthead-stat">Setup time <strong>~4 hrs (one-time)</strong></span>
+      <span class="masthead-stat">Per-project time <strong>&lt; 10 min</strong></span>
+      <span class="masthead-stat">Stack <strong>Next.js 14 + Vercel + GitHub Actions</strong></span>
+    </div>
+  </div>
+  <div class="phase-bar">
+    <div class="phase-bar-inner">
+      <button class="phase-tab active" onclick="switchPhase('setup', this)">01 · Setup</button>
+      <button class="phase-tab" onclick="switchPhase('build', this)">02 · Build</button>
+      <button class="phase-tab" onclick="switchPhase('test', this)">03 · QA & Testing</button>
+      <button class="phase-tab" onclick="switchPhase('deploy', this)">04 · Deploy</button>
+      <button class="phase-tab" onclick="switchPhase('monitor', this)">05 · Monitor</button>
+      <button class="phase-tab" onclick="switchPhase('prompts', this)">06 · Prompt Library</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="content">
+<div class="two-col">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span class="progress-label">Project progress</span>
+      <span class="progress-pct" id="pct">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="prog" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Setup checklist</div>
+    <div id="sidebar-checks"></div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Quick commands</div>
+    <div style="font-family:var(--mono);font-size:11.5px;line-height:2;color:#3a3530;">
+      <div style="padding:4px 0;border-bottom:1px solid var(--rule)"><span style="color:var(--muted)">setup</span><br><code>node scripts/setup-project.js</code></div>
+      <div style="padding:4px 0;border-bottom:1px solid var(--rule);margin-top:4px"><span style="color:var(--muted)">test</span><br><code>npm test</code></div>
+      <div style="padding:4px 0;border-bottom:1px solid var(--rule);margin-top:4px"><span style="color:var(--muted)">lighthouse</span><br><code>npm run lhci</code></div>
+      <div style="padding:4px 0;border-bottom:1px solid var(--rule);margin-top:4px"><span style="color:var(--muted)">stress test</span><br><code>npm run stress</code></div>
+      <div style="padding:4px 0;margin-top:4px"><span style="color:var(--muted)">deploy</span><br><code>git push origin main</code></div>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-label">Files in template repo</div>
+    <div class="file-tree">
+<span class="ft-dir">├── .github/workflows/</span>
+<span class="ft-important">│   └── ci-deploy.yml ★</span>
+<span class="ft-dir">├── tests/</span>
+<span class="ft-file">│   ├── e2e/baseline.spec.ts</span>
+<span class="ft-file">│   └── stress/load.js</span>
+<span class="ft-dir">├── scripts/</span>
+<span class="ft-important">│   └── setup-project.js ★</span>
+<span class="ft-dir">├── src/app/</span>
+<span class="ft-file">│   └── page.tsx</span>
+<span class="ft-important">├── playwright.config.ts ★</span>
+<span class="ft-important">├── lighthouserc.json ★</span>
+<span class="ft-file">├── .env.example</span>
+<span class="ft-file">├── .gitignore</span>
+<span class="ft-important">├── PROMPTS.md ★</span>
+<span class="ft-file">└── package.json</span>
+<span class="ft-comment">
+★ = pre-wired, ready to use</span>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN PANELS -->
+<main class="main">
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PHASE 1: SETUP                          -->
+<!-- ═══════════════════════════════════════ -->
+<div class="phase-panel active" id="phase-setup">
+  <h2>One-time Setup</h2>
+  <p class="panel-desc">Do this once. Every new client project after this takes &lt; 10 minutes. The goal is a GitHub template repo that is fully pre-wired.</p>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-setup">Setup</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Create the GitHub template repo</div>
+        <div class="step-subtitle">One repo to rule them all — every project clones from this</div>
+      </div>
+      <span class="step-time">30 min</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <p>Go to github.com → New Repository → Name it <code>piaazo-web-template</code>. After creation, go to Settings and check <strong>"Template repository"</strong>.</p>
+      <ul class="checklist">
+        <li>Create repo: <code>piaazo-web-template</code> (private)</li>
+        <li>Enable "Template repository" in repo Settings</li>
+        <li>Push all files from the template package to this repo</li>
+        <li>Set branch protection on <code>main</code>: require CI to pass before merge</li>
+        <li>From now on: new client project = "Use this template" button</li>
+      </ul>
+      <div class="alert alert-ok">✓ After this, every project gets tests + CI/CD + monitoring pre-wired from day one.</div>
+    </div>
+  </div>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-setup">Setup</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Install and authenticate Vercel CLI</div>
+        <div class="step-subtitle">Required for headless deploys from the terminal and GitHub Actions</div>
+      </div>
+      <span class="step-time">10 min</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <div class="code-block">
+        <div class="code-header"><span class="code-filename">terminal</span><button class="copy-btn" onclick="copyPre(this)">copy</button></div>
+        <pre><span class="c"># Install globally</span>
+npm install -g vercel@latest
+
+<span class="c"># Login (opens browser)</span>
+vercel login
+
+<span class="c"># Link your first project (run inside the repo)</span>
+vercel link
+
+<span class="c"># This creates .vercel/project.json — get your IDs from there</span>
+cat .vercel/project.json</pre>
+      </div>
+      <div class="alert alert-warn">⚠ Add <code>.vercel/</code> to .gitignore — project.json contains sensitive IDs</div>
+    </div>
+  </div>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-setup">Setup</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Add GitHub Secrets</div>
+        <div class="step-subtitle">The pipeline cannot deploy without these three secrets</div>
+      </div>
+      <span class="step-time">5 min</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <p>Go to: GitHub repo → Settings → Secrets and variables → Actions → New repository secret</p>
+      <ul class="checklist">
+        <li><code>VERCEL_TOKEN</code> — get from vercel.com/account/tokens → Create Token</li>
+        <li><code>VERCEL_ORG_ID</code> — from <code>.vercel/project.json</code> field <code>orgId</code></li>
+        <li><code>VERCEL_PROJECT_ID</code> — from <code>.vercel/project.json</code> field <code>projectId</code></li>
+      </ul>
+      <div class="alert alert-info">ℹ For multi-client (agency): use GitHub Organization Secrets so all repos inherit these automatically.</div>
+    </div>
+  </div>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-setup">Setup</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Install k6 for stress testing</div>
+        <div class="step-subtitle">One-time install on your machine — runs against any URL</div>
+      </div>
+      <span class="step-time">5 min</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <div class="code-block">
+        <div class="code-header"><span class="code-filename">terminal (mac)</span><button class="copy-btn" onclick="copyPre(this)">copy</button></div>
+        <pre><span class="c"># macOS</span>
+brew install k6
+
+<span class="c"># Or download from: https://k6.io/docs/get-started/installation/</span>
+
+<span class="c"># Verify</span>
+k6 version</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-setup">Setup</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Set up Sentry (one org for all clients)</div>
+        <div class="step-subtitle">Create one Sentry project per client — free tier covers 5k errors/mo</div>
+      </div>
+      <span class="step-time">10 min</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <div class="code-block">
+        <div class="code-header"><span class="code-filename">terminal (run inside each new project)</span><button class="copy-btn" onclick="copyPre(this)">copy</button></div>
+        <pre><span class="c"># Auto-configures Next.js integration</span>
+npx @sentry/wizard@latest -i nextjs --no-telemetry
+
+<span class="c"># Then add SENTRY_DSN to .env.local and Vercel env vars</span></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PHASE 2: BUILD                          -->
+<!-- ═══════════════════════════════════════ -->
+<div class="phase-panel" id="phase-build">
+  <h2>Build Phase</h2>
+  <p class="panel-desc">Starting a new client project from the template. The setup script handles all scaffolding automatically.</p>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-build">Build</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Scaffold new client project</div>
+        <div class="step-subtitle">Use the template repo + run the setup script</div>
+      </div>
+      <span class="step-time">10 min</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <ul class="checklist">
+        <li>Go to github.com/YOUR_ORG/piaazo-web-template → "Use this template" → "Create a new repository"</li>
+        <li>Name it: <code>client-[client-slug]</code> (e.g. <code>client-acme-dental</code>)</li>
+        <li>Clone locally: <code>git clone git@github.com:YOUR_ORG/client-name.git</code></li>
+        <li>Run the setup script: <code>npm run setup</code></li>
+        <li>Script will prompt for client name, domain, stack, and Sentry — then wire everything</li>
+        <li>Add the 3 GitHub Secrets (VERCEL_TOKEN, ORG_ID, PROJECT_ID) for this new repo</li>
+      </ul>
+      <div class="alert alert-ok">✓ After <code>npm run setup</code> the project is ready: deps installed, .env.local created, Vercel linked, initial commit made.</div>
+    </div>
+  </div>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-build">Build</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Branch workflow during development</div>
+        <div class="step-subtitle">Never commit directly to main — always use feature branches</div>
+      </div>
+      <span class="step-time">Ongoing</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <div class="code-block">
+        <div class="code-header"><span class="code-filename">git workflow</span><button class="copy-btn" onclick="copyPre(this)">copy</button></div>
+        <pre><span class="c"># Start new feature</span>
+git checkout -b feature/homepage-redesign
+
+<span class="c"># Develop, commit often</span>
+git add . && git commit -m "feat: add hero section"
+
+<span class="c"># Push → triggers preview deploy + tests automatically</span>
+git push origin feature/homepage-redesign
+
+<span class="c"># Open PR to main → GitHub Actions runs full pipeline</span>
+<span class="c"># Preview URL is posted as a comment on the PR</span>
+<span class="c"># Once tests pass → merge → production deploy fires</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-build">Build</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Using Claude for code generation</div>
+        <div class="step-subtitle">Use PROMPTS.md for consistent, high-quality AI output</div>
+      </div>
+      <span class="step-time">Ongoing</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <p>Open <code>PROMPTS.md</code> in the repo. Use the scaffold prompts for new pages, the component prompts for UI pieces, and the PR review prompt before every merge. Claude writes the tests too — use the test generation prompts.</p>
+      <div class="alert alert-info">ℹ The Prompts tab (above) has the full library with a copy button for each prompt.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PHASE 3: QA & TESTING                  -->
+<!-- ═══════════════════════════════════════ -->
+<div class="phase-panel" id="phase-test">
+  <h2>QA & Testing</h2>
+  <p class="panel-desc">Three testing layers that run automatically. Manually run stress tests before any major client handoff.</p>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-test">Test</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Playwright E2E tests (auto on every push)</div>
+        <div class="step-subtitle">Baseline spec covers every project. Add custom tests per client.</div>
+      </div>
+      <span class="step-time">Auto</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <p>The <code>tests/e2e/baseline.spec.ts</code> file runs automatically in GitHub Actions. It covers: page load, navigation, mobile viewport, no broken links, no console errors, image alt text, and form detection.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-filename">run tests locally</span><button class="copy-btn" onclick="copyPre(this)">copy</button></div>
+        <pre><span class="c"># Run all tests headless</span>
+npm test
+
+<span class="c"># Run with UI debugger (great for writing new tests)</span>
+npm run test:ui
+
+<span class="c"># Run against a live URL (e.g. Vercel preview)</span>
+BASE_URL=https://preview-abc123.vercel.app npm test</pre>
+      </div>
+      <ul class="checklist">
+        <li>Add client-specific tests in <code>tests/e2e/[client-name].spec.ts</code></li>
+        <li>Use the "Write Playwright tests" prompt in PROMPTS.md for AI-generated tests</li>
+        <li>Playwright reports saved as artifacts in GitHub Actions (download from Actions tab)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-test">Test</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Lighthouse CI (auto on every push)</div>
+        <div class="step-subtitle">Performance ≥ 85, Accessibility ≥ 90 — gates the deploy</div>
+      </div>
+      <span class="step-time">Auto</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <p>Lighthouse CI runs automatically in GitHub Actions. If scores drop below thresholds in <code>lighthouserc.json</code>, the deploy is blocked. Reports are uploaded to temporary public storage — the Actions job summary has the link.</p>
+      <div class="code-block">
+        <div class="code-header"><span class="code-filename">run locally</span><button class="copy-btn" onclick="copyPre(this)">copy</button></div>
+        <pre><span class="c"># Build first, then audit</span>
+npm run build && npm run lhci
+
+<span class="c"># Adjust thresholds in lighthouserc.json</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-test">Test</span>
+      <div class="step-title-wrap">
+        <div class="step-title">k6 stress test (run before client handoff)</div>
+        <div class="step-subtitle">Smoke → Load → Stress — run against the Vercel preview URL</div>
+      </div>
+      <span class="step-time">Manual (15 min)</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <div class="code-block">
+        <div class="code-header"><span class="code-filename">stress test commands</span><button class="copy-btn" onclick="copyPre(this)">copy</button></div>
+        <pre><span class="c"># Smoke test (1 user — sanity check)</span>
+k6 run tests/stress/load.js
+
+<span class="c"># Load test (50 users — normal traffic)</span>
+k6 run --env STAGE=load -e BASE_URL=https://preview.vercel.app tests/stress/load.js
+
+<span class="c"># Stress test (100 users — find the breaking point)</span>
+k6 run --env STAGE=stress -e BASE_URL=https://preview.vercel.app tests/stress/load.js</pre>
+      </div>
+      <ul class="checklist">
+        <li>Run smoke test: must pass before any client demo</li>
+        <li>Run load test: must pass before production handoff</li>
+        <li>Stress test: run once per project to establish baseline capacity</li>
+        <li>Results saved to <code>tests/stress/results/summary.json</code></li>
+      </ul>
+      <div class="alert alert-warn">⚠ Run stress tests against Vercel <em>preview</em> URL — not production. Vercel's free tier may throttle.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PHASE 4: DEPLOY                         -->
+<!-- ═══════════════════════════════════════ -->
+<div class="phase-panel" id="phase-deploy">
+  <h2>Deploy</h2>
+  <p class="panel-desc">Fully automated after the one-time setup. Push to main → tests pass → production deploys. No dashboard clicks.</p>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-deploy">Deploy</span>
+      <div class="step-title-wrap">
+        <div class="step-title">What happens on every push to main</div>
+        <div class="step-subtitle">The full pipeline — automated, gated, no manual steps</div>
+      </div>
+      <span class="step-time">~5 min total</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <ul class="checklist">
+        <li><strong>Build job</strong> — npm ci + next build. Artifact uploaded.</li>
+        <li><strong>E2E job</strong> — Playwright runs on chromium + firefox + mobile iPhone 14. Any failure blocks deploy.</li>
+        <li><strong>Lighthouse job</strong> — Performance/accessibility audit. Fail if below thresholds.</li>
+        <li><strong>Deploy job</strong> (only if both above pass) — vercel build + vercel deploy --prod. Live URL in Actions summary.</li>
+      </ul>
+      <div class="alert alert-ok">✓ On PR (not main): same pipeline but deploys to a preview URL which is automatically posted as a PR comment for client review.</div>
+    </div>
+  </div>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-deploy">Deploy</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Custom domain setup</div>
+        <div class="step-subtitle">Point client's domain to Vercel in 3 steps</div>
+      </div>
+      <span class="step-time">15 min</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <ul class="checklist">
+        <li>Vercel Dashboard → Project → Settings → Domains → Add domain</li>
+        <li>Copy the CNAME/A record Vercel shows you</li>
+        <li>Go to client's domain registrar (GoDaddy, Namecheap, etc.) → DNS → Add those records</li>
+        <li>SSL is automatic — Vercel provisions it within minutes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-deploy">Deploy</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Environment variables in production</div>
+        <div class="step-subtitle">Never hardcode secrets — set them in Vercel dashboard</div>
+      </div>
+      <span class="step-time">5 min</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <p>Vercel Dashboard → Project → Settings → Environment Variables. Add all variables from <code>.env.local</code> here, setting them for Production (and Preview/Development if needed).</p>
+      <div class="alert alert-warn">⚠ Variables starting with <code>NEXT_PUBLIC_</code> are exposed to the browser. Never put secret keys in these.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PHASE 5: MONITOR                        -->
+<!-- ═══════════════════════════════════════ -->
+<div class="phase-panel" id="phase-monitor">
+  <h2>Monitor</h2>
+  <p class="panel-desc">Three monitoring layers. Set up once per project. You'll know about problems before the client does.</p>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-monitor">Monitor</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Sentry — runtime error tracking</div>
+        <div class="step-subtitle">Catches JS errors, API failures, and unhandled exceptions in production</div>
+      </div>
+      <span class="step-time">Auto after setup</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <ul class="checklist">
+        <li>Set <code>SENTRY_DSN</code> in Vercel environment variables</li>
+        <li>Sentry auto-captures: unhandled exceptions, API route errors, Next.js SSR errors</li>
+        <li>Configure alerts: Sentry → Project → Alerts → "Alert me on new issues" (email)</li>
+        <li>Source maps uploaded automatically during build (by Sentry's Next.js plugin)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-monitor">Monitor</span>
+      <div class="step-title-wrap">
+        <div class="step-title">BetterStack — uptime monitoring</div>
+        <div class="step-subtitle">Pings the site every 3 minutes. Emails + SMS if it goes down.</div>
+      </div>
+      <span class="step-time">5 min per client</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <ul class="checklist">
+        <li>betterstack.com → Uptime → New Monitor</li>
+        <li>URL: client's production domain. Check interval: 3 minutes.</li>
+        <li>Alert channels: email (yours + client's if appropriate)</li>
+        <li>Free tier: 10 monitors, 3-min checks — covers most agency work</li>
+        <li>Optionally add a public status page for the client (betterstack.com/status-page)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="step-card" onclick="toggleStep(this)">
+    <div class="step-head">
+      <span class="step-badge badge-monitor">Monitor</span>
+      <div class="step-title-wrap">
+        <div class="step-title">Vercel Analytics + Speed Insights</div>
+        <div class="step-subtitle">Real user performance data — Core Web Vitals from actual visitors</div>
+      </div>
+      <span class="step-time">2 min</span>
+      <span class="step-toggle">▾</span>
+    </div>
+    <div class="step-body">
+      <div class="code-block">
+        <div class="code-header"><span class="code-filename">src/app/layout.tsx — add these imports</span><button class="copy-btn" onclick="copyPre(this)">copy</button></div>
+        <pre><span class="k">import</span> { Analytics } <span class="k">from</span> <span class="s">'@vercel/analytics/react'</span>;
+<span class="k">import</span> { SpeedInsights } <span class="k">from</span> <span class="s">'@vercel/speed-insights/next'</span>;
+
+<span class="c">// Add inside your root layout JSX:</span>
+<span class="f">&lt;Analytics /&gt;</span>
+<span class="f">&lt;SpeedInsights /&gt;</span></pre>
+      </div>
+      <p>Then enable in Vercel Dashboard → Project → Analytics. Free with hobby plan. Shows LCP, FID, CLS by page, device, country.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- PHASE 6: PROMPT LIBRARY                 -->
+<!-- ═══════════════════════════════════════ -->
+<div class="phase-panel" id="phase-prompts">
+  <h2>Claude Prompt Library</h2>
+  <p class="panel-desc">Copy-paste prompts for every phase of development. Click any card to get the full prompt with a copy button.</p>
+
+  <div class="prompt-grid" id="prompt-grid"></div>
+</div>
+
+</main>
+</div><!-- /two-col -->
+</div><!-- /content -->
+
+<!-- PROMPT MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="modal-title"></div>
+      <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">×</button>
+    </div>
+    <div class="modal-body">
+      <pre id="modal-body"></pre>
+      <button class="modal-copy-btn" onclick="copyModal()">Copy prompt</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Phase switching ──
+function switchPhase(id, btn) {
+  document.querySelectorAll('.phase-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.phase-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('phase-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── Step accordion ──
+function toggleStep(card) {
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.step-card.open').forEach(c => c.classList.remove('open'));
+  if (!isOpen) card.classList.add('open');
+}
+
+// ── Copy code blocks ──
+function copyPre(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = 'copied!';
+    setTimeout(() => btn.textContent = 'copy', 1800);
+  });
+}
+
+// ── Progress / sidebar checks ──
+const checkItems = [
+  'Create template repo on GitHub',
+  'Mark repo as Template Repository',
+  'Install Vercel CLI (npm i -g vercel)',
+  'Run vercel login',
+  'Add VERCEL_TOKEN secret',
+  'Add VERCEL_ORG_ID secret',
+  'Add VERCEL_PROJECT_ID secret',
+  'Install k6 on your machine',
+  'Set up Sentry account',
+  'Set up BetterStack uptime monitor',
+  'Enable branch protection on main',
+  'Test pipeline with a sample push',
+];
+
+const STORAGE_KEY = 'piaazo_sop_checks';
+let checks = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+
+function renderChecks() {
+  const container = document.getElementById('sidebar-checks');
+  container.innerHTML = '';
+  checkItems.forEach((item, i) => {
+    const done = !!checks[i];
+    const div = document.createElement('div');
+    div.className = 'sidebar-item';
+    div.innerHTML = `
+      <div class="sidebar-check ${done ? 'done' : ''}" onclick="toggleCheck(${i}, event)">
+        ${done ? '✓' : ''}
+      </div>
+      <span style="${done ? 'text-decoration:line-through;color:var(--muted)' : ''}">${item}</span>
+    `;
+    container.appendChild(div);
+  });
+  const done = Object.values(checks).filter(Boolean).length;
+  const pct = Math.round(done / checkItems.length * 100);
+  document.getElementById('pct').textContent = pct + '%';
+  document.getElementById('prog').style.width = pct + '%';
+}
+
+function toggleCheck(i, e) {
+  e.stopPropagation();
+  checks[i] = !checks[i];
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(checks));
+  renderChecks();
+}
+
+renderChecks();
+
+// ── Prompt library ──
+const prompts = [
+  {
+    tag: 'Build',
+    title: 'Scaffold a new page',
+    desc: 'Generate a Next.js 14 App Router page with TypeScript, Tailwind, metadata, and skeleton',
+    prompt: `You are a senior Next.js 14 developer using the App Router.
+Create a [PAGE_TYPE] page for [CLIENT_NAME], a [BUSINESS_TYPE].
+
+Requirements:
+- File: src/app/[route]/page.tsx
+- Use TypeScript with proper types
+- Mobile-first, accessible (WCAG 2.1 AA)
+- No inline styles — use Tailwind utility classes only
+- Export a metadata object with title and description
+- Include a loading.tsx skeleton component
+- Performance: no layout shift, lazy-load images with next/image
+
+The page should include: [LIST SECTIONS]
+Brand colors: [PRIMARY] [SECONDARY]
+Tone: [PROFESSIONAL/PLAYFUL/LUXURY/etc]`
+  },
+  {
+    tag: 'Build',
+    title: 'Scaffold a component',
+    desc: 'Create a reusable TypeScript React component with full props interface',
+    prompt: `Create a reusable React component: [COMPONENT_NAME]
+- TypeScript, named export
+- Props interface fully typed
+- Tailwind classes only, no inline styles
+- Accessible: proper aria labels, keyboard navigable
+- Handles loading, error, and empty states
+- Include a brief JSDoc comment
+
+Props needed: [LIST PROPS]
+Behavior: [DESCRIBE HOW IT WORKS]`
+  },
+  {
+    tag: 'Testing',
+    title: 'Write Playwright tests for a page',
+    desc: 'Generate E2E tests for any page — covers load, interactions, mobile, accessibility',
+    prompt: `Write Playwright tests for the [PAGE_NAME] page at route /[ROUTE].
+
+The page contains:
+- [DESCRIBE KEY ELEMENTS: nav, form, buttons, sections etc]
+
+Write tests for:
+1. Page loads with 200 status
+2. Key headings/text are visible
+3. Forms: fill and submit (intercept network request, don't actually submit)
+4. Mobile viewport 375px has no horizontal scroll
+5. No console errors on load
+6. CTA buttons are clickable and have correct href
+7. Images have alt text
+
+Use @playwright/test. TypeScript. 
+Group tests with test.describe blocks.
+Use test.beforeEach to navigate to the page.
+Mock any external API calls.`
+  },
+  {
+    tag: 'Testing',
+    title: 'Generate tests from component code',
+    desc: 'Paste any component and Claude writes the full test suite',
+    prompt: `Read this React component code and write comprehensive Playwright E2E tests for it.
+
+Focus on:
+- User interactions and click behavior
+- Error states and edge cases  
+- Accessibility (keyboard nav, aria)
+- Mobile viewport behavior
+- Loading and empty states
+
+Do NOT test implementation details — test behavior from the user's perspective.
+Use TypeScript and @playwright/test.
+
+[PASTE COMPONENT CODE HERE]`
+  },
+  {
+    tag: 'Review',
+    title: 'PR code review',
+    desc: 'Security, performance, accessibility, TypeScript — full audit',
+    prompt: `Review this pull request diff as a senior engineer.
+Check for and list issues in these categories:
+
+1. SECURITY — XSS, injection, exposed secrets, insecure API calls, missing auth
+2. PERFORMANCE — unnecessary re-renders, missing memoization, large bundles, blocking operations
+3. ACCESSIBILITY — missing aria labels, poor contrast, keyboard traps, missing alt text
+4. TYPESCRIPT — any types, missing error handling, type casting abuse
+5. NEXT.JS — wrong SSR/CSR choice, missing image optimization, metadata issues
+6. SEO — missing metadata, bad heading structure, broken links
+
+For each issue:
+- Severity: CRITICAL / HIGH / MEDIUM / LOW
+- File and line number
+- What the problem is
+- Exact fix with code
+
+[PASTE DIFF OR CODE HERE]`
+  },
+  {
+    tag: 'Performance',
+    title: 'Fix Lighthouse issues',
+    desc: 'Paste Lighthouse results and get specific code fixes',
+    prompt: `This Next.js page has a Lighthouse performance score of [SCORE].
+The specific issues Lighthouse flagged are:
+
+[PASTE LIGHTHOUSE AUDIT RESULTS]
+
+Analyze these and provide:
+1. Root cause for each issue
+2. Specific code fix (show before/after)
+3. Priority order to fix them (biggest score impact first)
+
+Focus on: LCP, FID, CLS, image optimization, font loading, JS bundle size.
+
+Current page code:
+[PASTE PAGE/COMPONENT CODE]`
+  },
+  {
+    tag: 'SEO',
+    title: 'Generate page metadata',
+    desc: 'Full Next.js 14 metadata export with OG tags, Twitter cards, schema',
+    prompt: `Write Next.js 14 metadata for this page:
+- Page: [PAGE NAME — e.g. "Services", "About Us", "Contact"]
+- Client: [CLIENT NAME], [BUSINESS TYPE] in [CITY, PROVINCE]
+- Primary keyword: [MAIN KEYWORD]
+- Secondary keywords: [KEYWORD 2], [KEYWORD 3]
+- Page summary: [2-3 sentence description of page content]
+
+Output:
+1. TypeScript metadata export (title, description, openGraph, twitter)
+2. JSON-LD structured data as a Script component (LocalBusiness or relevant type)
+3. Canonical URL setup
+
+Rules: title < 60 chars, description < 155 chars, include city for local SEO.`
+  },
+  {
+    tag: 'Agency',
+    title: 'Client handoff report',
+    desc: 'Generate a professional delivery document for the client',
+    prompt: `Generate a professional website handoff report for:
+
+Client: [CLIENT NAME]
+Business: [BUSINESS TYPE]
+Live URL: [PRODUCTION URL]
+Staging URL: [STAGING URL]
+
+Lighthouse scores:
+- Performance: [SCORE]
+- Accessibility: [SCORE]  
+- SEO: [SCORE]
+- Best Practices: [SCORE]
+
+Include these sections:
+1. Executive summary (what was built, what problem it solves)
+2. Live URLs and environments
+3. Performance summary (interpret the Lighthouse scores in plain English)
+4. How to make content updates
+5. Hosting & billing details (Vercel plan, domain registrar, renewal dates)
+6. Error monitoring and uptime alerts (Sentry + BetterStack)
+7. Support process (how to request changes, response time SLA)
+8. What is NOT included in this scope
+
+Tone: professional, clear, no jargon. Client is non-technical.
+Format: Markdown.`
+  },
+];
+
+const grid = document.getElementById('prompt-grid');
+prompts.forEach((p, i) => {
+  const card = document.createElement('div');
+  card.className = 'prompt-card';
+  card.innerHTML = `<div class="prompt-tag">${p.tag}</div><div class="prompt-title">${p.title}</div><div class="prompt-desc">${p.desc}</div>`;
+  card.onclick = () => openModal(p);
+  grid.appendChild(card);
+});
+
+function openModal(p) {
+  document.getElementById('modal-title').textContent = p.title;
+  document.getElementById('modal-body').textContent = p.prompt;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(e) {
+  if (e.target === document.getElementById('modal')) {
+    document.getElementById('modal').classList.remove('open');
+  }
+}
+function copyModal() {
+  const text = document.getElementById('modal-body').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.modal-copy-btn');
+    btn.textContent = '✓ Copied to clipboard';
+    setTimeout(() => btn.textContent = 'Copy prompt', 1800);
+  });
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('modal').classList.remove('open');
+});
+</script>
+</body>
+</html>

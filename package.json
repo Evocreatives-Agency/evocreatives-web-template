@@ -1,0 +1,39 @@
+{
+  "name": "piaazo-web-template",
+  "version": "1.0.0",
+  "description": "Piaazo Agency — reusable website project template",
+  "private": true,
+  "scripts": {
+    "dev":     "next dev",
+    "build":   "next build",
+    "start":   "next start",
+    "lint":    "next lint",
+    "setup":   "node scripts/setup-project.js",
+    "test":    "npx playwright test",
+    "test:ui": "npx playwright test --ui",
+    "test:headed": "npx playwright test --headed",
+    "stress":        "k6 run tests/stress/load.js",
+    "stress:load":   "k6 run --env STAGE=load tests/stress/load.js",
+    "stress:stress": "k6 run --env STAGE=stress tests/stress/load.js",
+    "lhci":    "npx lhci autorun",
+    "deploy:preview":    "vercel",
+    "deploy:production": "vercel --prod"
+  },
+  "dependencies": {
+    "next": "^14.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "@sentry/nextjs": "^8.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "@lhci/cli": "^0.14.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.3.0",
+    "typescript": "^5.4.0",
+    "wait-on": "^7.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
