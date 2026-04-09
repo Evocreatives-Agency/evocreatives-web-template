@@ -1,4 +1,4 @@
-# Piaazo Agency — Web Project Template
+# Evocreatives Agency — Web Project Template
 
 > One-command project setup. Automated tests. Auto-deploy on push. Built for speed and repeatability.
 
@@ -7,7 +7,7 @@
 ```bash
 # 1. Click "Use this template" on GitHub → create new repo
 # 2. Clone it
-git clone git@github.com:piaazo-agency/client-name.git
+git clone git@github.com:Evocreatives-Agency/client-name.git
 cd client-name
 
 # 3. Run setup (handles everything: deps, Vercel link, .env, initial commit)
@@ -27,7 +27,7 @@ That's it. Your site is live on Vercel with tests, monitoring, and CI/CD active.
 ## What's included
 
 | File | Purpose |
-|------|---------|
+|------|----------|
 | `.github/workflows/ci-deploy.yml` | Full CI/CD: build → E2E tests → Lighthouse → deploy |
 | `playwright.config.ts` | Multi-browser E2E test config (Chrome, Firefox, mobile) |
 | `tests/e2e/baseline.spec.ts` | Baseline tests that run on every project |
@@ -107,4 +107,4 @@ Open `SOP-DASHBOARD.html` in a browser for the full interactive SOP with checkli
 
 ---
 
-*Piaazo Agency · piaazo.com*
+*Evocreatives Agency · evocreatives.ca*
